@@ -111,7 +111,19 @@ def add_planets():
     db.session.add(new_planet)
     db.session.commit()
 
-    return jsonify({"msg":  "Planeta creado exitosamente"}), 200    
+    return jsonify({"msg":  "Planeta creado exitosamente"}), 200
+
+@app.route('/character/<int:character_id>', methods=['GET'])
+def get_single_character(character_id):
+    body = request.get_json()
+    single_character = Characters.query.get(character_id)
+    return jsonify(single_character.serialize()), 200    
+
+@app.route('/planets/<int:planet_id>', methods=['GET'])
+def get_single_planet(planet_id):
+    body = request.get_json()
+    single_planet = Planets.query.get(planet_id)
+    return jsonify(single_planet.serialize()), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
