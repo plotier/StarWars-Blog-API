@@ -40,7 +40,78 @@ def get_users():
 @app.route('/user', methods=['POST'])
 def add_user():
     body_request = request.get_json()
+
     name = body_request.get("name", None)
+    email = body_request.get("email", None)
+    password = body_request.get("password", None)
+    last_name = body_request.get("last_name", None)
+
+    
+    new_user = User(
+        name = name_request,
+        email = email_request,
+        password = password_request,
+        last_name = last_name_request)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg":  "Usuario creado exitosamente"}), 200
+
+
+app.route('/characters', methods=['GET'])
+def get_characters():
+    response_body = Characters.query.all()
+    characters_list = []
+
+    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), req))}), 200
+
+@app.route('/characters', methods=['POST'])
+def add_character():
+    body_request = Characters.get_json()
+
+    name = body_request.get("name", None)
+    gender = body_request.get("gender", None)
+    height = body_request.get("height", None)
+
+    
+    new_character = Characters(
+        name = name_request,
+        gender = gender_request,
+        height = height_request,
+        )
+
+    db.session.add(new_character)
+    db.session.commit()
+
+    return jsonify({"msg":  "Personaje creado exitosamente"}), 200
+
+@app.route('/planets', methods=['GET'])
+def get_planets():
+    response_body = Planets.query.all()
+    planet_list = []
+
+    return jsonify({"planet_list" : list(map(lambda x:x.serialize(), req))}), 200
+
+@app.route('/planets', methods=['POST'])
+def add_planets():
+    body_request = Planets.get_json()
+
+    name = body_request.get("name", None)
+    climate = body_request.get("climate", None)
+    population = body_request.get("population", None)
+
+    
+    new_planet = Planets(
+        name = name_request,
+        climate = climate_request,
+        population = population_request,
+        )
+
+    db.session.add(new_planet)
+    db.session.commit()
+
+    return jsonify({"msg":  "Planeta creado exitosamente"}), 200    
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
