@@ -125,6 +125,16 @@ def get_single_planet(planet_id):
     single_planet = Planets.query.get(planet_id)
     return jsonify(single_planet.serialize()), 200
 
+   # Favorites -------------------------------------------------------------
+
+app.route('/favorites', methods=['GET'])
+def get_favorites():
+    response_body = Characters.query.all()
+    characters_list = []
+
+    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), req))}), 200
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
