@@ -23,7 +23,7 @@ class User(db.Model):
         }
 
 class Characters(db.Model):
-    id = db.Column(db.Integer, primary_key=True))
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     gender = db.Column(db.String(80), unique=False, nullable=False)
     height= db.Column(db.Integer)
@@ -41,7 +41,7 @@ class Characters(db.Model):
         }
 
 class Planets(db.Model):
-    id = db.Column(db.Integer, primary_key=True))
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     climate = db.Column(db.String(80), unique=False, nullable=False)
     population= db.Column(db.Integer)
@@ -59,7 +59,7 @@ class Planets(db.Model):
         }
 
 class Favorites(db.Model):
-    id = db.Column(db.Integer, primary_key=True))
+    id = db.Column(db.Integer, primary_key=True)
     user_id =  db.Column(db.Integer, db.ForeignKey("user.id"))
     character_id =  db.Column(db.Integer, db.ForeignKey("characters.id"))
     planet_id = db.Column(db.Integer, db.ForeignKey("planets.id"))

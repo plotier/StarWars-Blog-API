@@ -33,9 +33,8 @@ def sitemap():
 @app.route('/user', methods=['GET'])
 def get_users():
     response_body = User.query.all()
-    user_list = []
 
-    return jsonify({"user_list" : list(map(lambda x:x.serialize(), req))}), 200
+    return jsonify(list(map(lambda x:x.serialize(), response_body ))), 200
 
 @app.route('/user', methods=['POST'])
 def add_user():
@@ -48,10 +47,10 @@ def add_user():
 
     
     new_user = User(
-        name = name_request,
-        email = email_request,
-        password = password_request,
-        last_name = last_name_request)
+        name = name,
+        email = email,
+        password = password,
+        last_name = last_name)
 
     db.session.add(new_user)
     db.session.commit()
@@ -59,12 +58,12 @@ def add_user():
     return jsonify({"msg":  "Usuario creado exitosamente"}), 200
 
 
-app.route('/characters', methods=['GET'])
+@app.route('/characters', methods=['GET'])
 def get_characters():
     response_body = Characters.query.all()
     characters_list = []
 
-    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), req))}), 200
+    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), response_body))}), 200
 
 @app.route('/characters', methods=['POST'])
 def add_character():
@@ -91,7 +90,7 @@ def get_planets():
     response_body = Planets.query.all()
     planet_list = []
 
-    return jsonify({"planet_list" : list(map(lambda x:x.serialize(), req))}), 200
+    return jsonify({"planet_list" : list(map(lambda x:x.serialize(), response_body))}), 200
 
 @app.route('/planets', methods=['POST'])
 def add_planets():
@@ -127,7 +126,7 @@ def get_single_planet(planet_id):
 
    # Favorites -------------------------------------------------------------
 
-app.route('/favorites', methods=['GET'])
+@app.route('/favorites', methods=['GET'])
 def get_favorites():
     response_body = Characters.query.all()
     characters_list = []
