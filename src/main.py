@@ -33,7 +33,6 @@ def sitemap():
 @app.route('/user', methods=['GET'])
 def get_users():
     response_body = User.query.all()
-
     return jsonify(list(map(lambda x:x.serialize(), response_body ))), 200
 
 @app.route('/user', methods=['POST'])
@@ -61,13 +60,12 @@ def add_user():
 @app.route('/characters', methods=['GET'])
 def get_characters():
     response_body = Characters.query.all()
-    characters_list = []
 
-    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), response_body))}), 200
+    return jsonify(list(map(lambda x:x.serialize(), response_body))), 200
 
 @app.route('/characters', methods=['POST'])
 def add_character():
-    body_request = Characters.get_json()
+    body_request = request.get_json()
 
     name = body_request.get("name", None)
     gender = body_request.get("gender", None)
@@ -75,9 +73,9 @@ def add_character():
 
     
     new_character = Characters(
-        name = name_request,
-        gender = gender_request,
-        height = height_request,
+        name = name,
+        gender = gender,
+        height = height,
         )
 
     db.session.add(new_character)
@@ -94,7 +92,7 @@ def get_planets():
 
 @app.route('/planets', methods=['POST'])
 def add_planets():
-    body_request = Planets.get_json()
+    body_request = request.get_json()
 
     name = body_request.get("name", None)
     climate = body_request.get("climate", None)
@@ -102,9 +100,9 @@ def add_planets():
 
     
     new_planet = Planets(
-        name = name_request,
-        climate = climate_request,
-        population = population_request,
+        name = name,
+        climate = climate,
+        population = population,
         )
 
     db.session.add(new_planet)
