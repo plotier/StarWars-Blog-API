@@ -131,23 +131,44 @@ def get_favorites():
     return jsonify({"characters_list" : list(map(lambda x:x.serialize(), response_body))}), 200
 
 
-@app.route('/favorites/characters/<int:character_id>', methods=['POST'])
+@app.route('/favorites/characters', methods=['POST'])
 def add_fav_character():
     body_request = request.get_json()
 
-    user_id_request = body_request.get("user_id", None)
-    character_id_request = body_request.get("character_id", None)
+    user_id = body_request.get("user_id", None)
+    character_id = body_request.get("character_id", None)
 
     
-    fav_character = Favorites(
-    user_id = user_id_request,
-    character_id = character_id_request
+    new_character_fav = Favorites(
+        user_id = user_id,
+        character_id = character_id
     )
 
-    db.session.add(fav_character)
+
+    db.session.add(new_character_fav)
     db.session.commit()
 
-    return jsonify({"msg":  "Personaje agregado a favoritos"}), 200
+    return jsonify({"msg":  "Character favorito agregado"}), 200
+
+
+@app.route('/favorites/planets', methods=['POST'])
+def add_fav_planet():
+    body_request = request.get_json()
+
+    user_id = body_request.get("user_id", None)
+    planet_id = body_request.get("planet_id", None)
+
+    
+    new_planet_fav = Favorites(
+        user_id = user_id,
+        planet_id = planet_id
+    )
+
+
+    db.session.add(new_planet_fav)
+    db.session.commit()
+
+    return jsonify({"msg":  "Planeta favorito agregado"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
