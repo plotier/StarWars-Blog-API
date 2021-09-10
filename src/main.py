@@ -128,7 +128,29 @@ def get_favorites():
     response_body = Characters.query.all()
     characters_list = []
 
-    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), req))}), 200
+    return jsonify({"characters_list" : list(map(lambda x:x.serialize(), response_body))}), 200
+
+
+@app.route('/favorites/characters/<int:character_id>', methods=['POST'])
+def add_fav_character(character_id):
+    body_request = request.get_json()
+
+    name = body_request.get("name", None)
+    gender = body_request.get("gender", None)
+    height = body_request.get("height", None)
+    character_id = body_request.get("character_id", None)
+
+    
+    fav_character = Characters(
+        name = name,
+        gender = gender,
+        height = height
+        )
+
+    db.session.add(fav_character)
+    db.session.commit()
+
+    return jsonify({"msg":  "Personaje agregado a favoritos"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
