@@ -132,20 +132,17 @@ def get_favorites():
 
 
 @app.route('/favorites/characters/<int:character_id>', methods=['POST'])
-def add_fav_character(character_id):
+def add_fav_character():
     body_request = request.get_json()
 
-    name = body_request.get("name", None)
-    gender = body_request.get("gender", None)
-    height = body_request.get("height", None)
-    character_id = body_request.get("character_id", None)
+    user_id_request = body_request.get("user_id", None)
+    character_id_request = body_request.get("character_id", None)
 
     
-    fav_character = Characters(
-        name = name,
-        gender = gender,
-        height = height
-        )
+    fav_character = Favorites(
+    user_id = user_id_request,
+    character_id = character_id_request
+    )
 
     db.session.add(fav_character)
     db.session.commit()
