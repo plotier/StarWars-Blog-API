@@ -171,6 +171,14 @@ def add_fav_planet():
     return jsonify({"msg":  "Planeta favorito agregado"}), 200
 
 
+@app.route("/favorites/<int:id>", methods=["DELETE"])
+def guide_delete(id):
+    guide = Favorites.query.get(id)
+    db.session.delete(guide)
+    db.session.commit()
+
+    return "Guide was successfully deleted"
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
