@@ -60,8 +60,8 @@ def add_user():
 @app.route('/characters', methods=['GET'])
 def get_characters():
     response_body = Characters.query.all()
-
-    return jsonify(list(map(lambda x:x.serialize(), response_body))), 200
+    character_list=[]
+    return jsonify({"character_list":list(map(lambda x:x.serialize(), response_body))}), 200
 
 @app.route('/characters', methods=['POST'])
 def add_character():
@@ -86,7 +86,6 @@ def add_character():
 @app.route('/planets', methods=['GET'])
 def get_planets():
     response_body = Planets.query.all()
-    planet_list = []
 
     return jsonify({"planet_list" : list(map(lambda x:x.serialize(), response_body))}), 200
 
@@ -110,7 +109,7 @@ def add_planets():
 
     return jsonify({"msg":  "Planeta creado exitosamente"}), 200
 
-@app.route('/character/<int:character_id>', methods=['GET'])
+@app.route('/characters/<int:character_id>', methods=['GET'])
 def get_single_character(character_id):
     body = request.get_json()
     single_character = Characters.query.get(character_id)
